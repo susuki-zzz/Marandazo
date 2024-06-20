@@ -61,33 +61,71 @@ function maranToClipboard() {
     <head>
         <meta charset="UTF-8">
         <title>マランだぞ</title>
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
         <style type="text/css">
-.previewDiv{
+ul.form{
+    margin: 1em 1em 1em auto;
+    padding: 0;
+}
+ul.form>li{
+    list-style: none;
+    white-space: inherit;
+    padding-bottom: 0.5em;
+}
+ul.form>li>div:first-child{
+    display: inline-block;
+    _display: inline;
+    min-width: 6em;
+}
+ul.form>li>input{
+    width: 20em;
+}
+    ul.form>li>div:last-child{
+        display: inline-block;
+        _display: inline;
+    }
+.previewBox{
+    max-width: 25em;
+}
+.previewInnerBox{
     border: 1px;
     border-radius: 5px;
     border-color: gray;
     border-style: double;
     margin: 0em 1em 1em 1em ;
-    padding: 1em;
-    min-width: 20em;
-    max-width: fit-content;
+    padding: 0em 1em 0em 1em;
+    min-width: min-content;
+    max-width: 100%;
 }
-ul.form{
-    margin: 1em 1em 1em auto;
-    padding: 0;
+.previewBox>div.acceptBox{
+    display: flex;
+    justify-content: flex-end;
 }
-ul.form li{
-    list-style: none;
-    white-space: inherit;
-}
-ul.form li div{
-    display: inline-block;
-    _display: inline;
-    min-width: 6em;
-}
-ul.form li input{
-    min-width: 20em;
-    max-width: max-content;
+@media (max-width: 768px){
+    .previewDiv{
+        max-width: 100%;
+    }
+    ul.form{
+        max-width: 100%;
+    }
+    ul.form>li{
+        max-width: 100%;
+    }
+    ul.form>li>input{
+        width: calc(100% - 10em);
+    }
+    ul.form>li>div:last-child{
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+    }
+    ul.form>li>div:last-child>button{
+        margin-top: 0.5em;
+        margin-left: 0.5em;
+    }
+    .previewBox{
+        max-width: 100%;
+    }
 }
         </style>
     </head>
@@ -100,16 +138,20 @@ ul.form li input{
             </li>
             <li>
                 <div class="form-head">文末のだぞ：</div>
-                    <input type="text" value="（HH:mm）" oninput="updatePreview()" id="maranFormatInput">
+                <input type="text" value="（HH:mm）" oninput="updatePreview()" id="maranFormatInput">
+                <div>
                     <button onclick="setFormat1()">①</button>
                     <button onclick="setFormat2()">②</button>
                     <button onclick="setFormat3()">③</button>
+                </div>
             </li>
         </ul>
-        プレビューだぞ：
-        <div class="previewDiv">
-            <p id="preview"></p>
+        <div class="previewBox">
+            プレビューだぞ：
+            <div class="previewInnerBox">
+                <p id="preview"></p>
+            </div>
+            <div class="acceptBox"><button onclick="maranToClipboard()">クリップボードへ</button></div>
         </div>
-        <button onclick="maranToClipboard()">クリップボードへ</button>
     </body>
 </html>
