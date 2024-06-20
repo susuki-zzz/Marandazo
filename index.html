@@ -39,6 +39,15 @@ function updatePreview(){
     let text = getMaranText();
     document.getElementById("preview").textContent = text;
 }
+function setFormat1(){
+    document.getElementById("maranFormatInput").value = "（YYYY/MM/dd HH:mm:ss:sss）";
+}
+function setFormat2(){
+    document.getElementById("maranFormatInput").value = "（M/d H:m:s）";
+}
+function setFormat3(){
+    document.getElementById("maranFormatInput").value = "（HH:mm:ss）";
+}
 function initialize(){
     updatePreview();
     intervalTImer = setInterval(function(){updatePreview()},2000);
@@ -76,6 +85,10 @@ ul.form li div{
     _display: inline;
     min-width: 6em;
 }
+ul.form li input{
+    min-width: 20em;
+    max-width: max-content;
+}
         </style>
     </head>
     <body onload="initialize()">
@@ -88,6 +101,9 @@ ul.form li div{
             <li>
                 <div class="form-head">文末のだぞ：</div>
                     <input type="text" value="（HH:mm）" oninput="updatePreview()" id="maranFormatInput">
+                    <button onclick="setFormat1()">①</button>
+                    <button onclick="setFormat2()">②</button>
+                    <button onclick="setFormat3()">③</button>
             </li>
         </ul>
         プレビューだぞ：
