@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja">
     <script>
-let intervalTImer;
+let intervalTimer;
 function formatDatetime(formatter){
     const d = new Date();
     let replaceAll = String.prototype.replaceAll;
@@ -48,9 +48,17 @@ function setFormat2(){
 function setFormat3(){
     document.getElementById("maranFormatInput").value = "（HH:mm:ss）";
 }
+function changeTimerState(){
+    if(intervalTimer==null){
+        intervalTimer = setInterval(function(){updatePreview()},2001);
+        return;
+    }
+    clearInterval(intervalTimer);
+    intervalTimer = null;
+}
 function initialize(){
     updatePreview();
-    intervalTImer = setInterval(function(){updatePreview()},2000);
+    changeTimerState();
 }
 function maranToClipboard() {
   let text = getMaranText();
@@ -155,6 +163,9 @@ ul.form>li>input{
                 <p id="preview"></p>
             </div>
             <div class="acceptBox"><button onclick="maranToClipboard()">クリップボードへ</button></div>
+        </div>
+        <div>
+            <button onclick="changeTimerState()">自動更新切り替え</button>
         </div>
     </body>
 </html>
