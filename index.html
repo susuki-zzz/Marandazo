@@ -62,14 +62,10 @@ function initialize(){
 }
 function maranToClipboard() {
   let text = getMaranText();
-  // Copy the text inside the text field
   navigator.clipboard.writeText(text);
 }
 function ofutonToClipboard(){
-    let formatInput = document.getElementById("maranFormatInput");
-    let text ="(:3[";
-    text += getFormatedDateTime().replace("（","").replace("）","");
-    text += "]";
+    let text = getMaranText().replace("（","(:3[").replace("）","]");
     navigator.clipboard.writeText(text);
 }
     </script>
@@ -173,7 +169,7 @@ button{
                 <p id="preview"></p>
             </div>
             <div class="acceptBox"><button onclick="maranToClipboard()">クリップボードへ</button></div>
-            <div class="acceptBox"><button onclick="ofutonToClipboard()">おふとんをクリップボードへ</button></div>
+            <div class="acceptBox"><button onclick="ofutonToClipboard()" title="『（』を『(:3[』、『）』を『]』に置換してるだけだぞ">おふとんをクリップボードへ</button></div>
         </div>
         <div>
             <button onclick="changeTimerState()">自動更新切り替え</button>
