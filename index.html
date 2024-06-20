@@ -23,16 +23,16 @@ function formatDatetime(formatter){
     
     return ret;
 }
+function getFormatedDateTime(){
+    let formatInput = document.getElementById("maranFormatInput");
+    return formatDatetime(formatInput.value);
+}
 function getMaranText(){
   let maranInput = document.getElementById("maranTextInput");
   //maranInput.select();
   //maranInput.setSelectionRange(0, 99999); // For mobile devices
   let text = maranInput.value;
-
-  let formatInput = document.getElementById("maranFormatInput");
-  //formatInput.select();
-  //formatInput.setSelectionRange(0, 99999); // For mobile devices
-  text += formatDatetime(formatInput.value);
+  text += getFormatedDateTime();
   return text;
 }
 function updatePreview(){
@@ -64,6 +64,13 @@ function maranToClipboard() {
   let text = getMaranText();
   // Copy the text inside the text field
   navigator.clipboard.writeText(text);
+}
+function ofutonToClipboard(){
+    let formatInput = document.getElementById("maranFormatInput");
+    let text ="(:3[";
+    text += getFormatedDateTime().replace("（","").replace("）","");
+    text += "]";
+    navigator.clipboard.writeText(text);
 }
     </script>
     <head>
@@ -109,10 +116,10 @@ ul.form>li>input{
     display: flex;
     justify-content: flex-end;
 }
+button{
+    margin-bottom: 0.5em;
+}
 @media (max-width: 768px){
-    button{
-        font-size: 150%;
-    }
     .previewDiv{
         max-width: 100%;
     }
@@ -136,6 +143,9 @@ ul.form>li>input{
     }
     .previewBox{
         max-width: 100%;
+    }
+    button{
+        font-size: 150%;
     }
 }
         </style>
@@ -163,6 +173,7 @@ ul.form>li>input{
                 <p id="preview"></p>
             </div>
             <div class="acceptBox"><button onclick="maranToClipboard()">クリップボードへ</button></div>
+            <div class="acceptBox"><button onclick="ofutonToClipboard()">おふとんをクリップボードへ</button></div>
         </div>
         <div>
             <button onclick="changeTimerState()">自動更新切り替え</button>
