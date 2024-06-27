@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <script>
+let intervalTimer;
+function formatDatetime(formatter){
+    const d = new Date();
+    let replaceAll = String.prototype.replaceAll;
+    
+    let ret = formatter.replaceAll("YYYY",d.getFullYear())
+        .replaceAll("MM",("0" + (d.getMonth()+1)).slice( -2 ))
+        .replaceAll("M",d.getMonth()+1)
+        .replaceAll("dd",("0" + d.getDate() ).slice( -2 ))
+        .replaceAll("d",d.getDate())
+        .replaceAll("HH",("0" + d.getHours()).slice( -2 ))
+        .replaceAll("H",d.getHours())
+        .replaceAll("mm",("0" + d.getMinutes()).slice( -2 ))
+        .replaceAll("m",d.getMinutes())
+        .replaceAll("hh",("0" + d.getHours()%12).slice( -2 ))
+        .replaceAll("h",d.getHours()%12)
+        .replaceAll("sss",("000"+ d.getMilliseconds()).slice( -3 ))
+        .replaceAll("ss",("0" + d.getSeconds()).slice( -2 ))
+        .replaceAll("s",d.getSeconds());
+    
+    return ret;
+}
+function getFormatedDateTime(){
+    let formatInput = document.getElementById("maranFormatInput");
+    return formatDatetime(formatInput.value);
+}
+function getMaranText(){
+  let maranInput = document.getElementById("maranTextInput");
+  //maranInput.select();
+  //maranInput.setSelectionRange(0, 99999); // For mobile devices
+  let text = maranInput.value;
+  text += getFormatedDateTime();
+  return text;
+}
+function updatePreview(){
+    let text = getMaranText();
+    document.getElementById("preview").textContent = text;
+}
+function setFormat1(){
+    document.getElementById("maranFormatInput").value = "（YYYY/MM/dd HH:mm:ss:sss）";
+}
+function setFormat2(){
+    document.getElementById("maranFormatInput").value = "（M/d H:m:s）";
+}
+function setFormat3(){
+    document.getElementById("maranFormatInput").value = "（HH:mm:ss）";
+}
+function changeTimerState(){
+    if(intervalTimer==null){
+        intervalTimer = setInterval(function(){updatePreview()},2001);
+        return;
+    }
+    clearInterval(intervalTimer);
+    intervalTimer = null;
+}
+function initialize(){
+    updatePreview();
+    changeTimerState();
+}
+function maranToClipboard() {
+  let text = getMaranText();
+  navigator.clipboard.writeText(text);
+}
+function ofutonToClipboard(){
+    let text = getMaranText().replace("（","(:3[").replace("）","]");
+    navigator.clipboard.writeText(text);
+}
+    </script>
+    <head>
+        <meta charset="UTF-8">
+        <title>マランだぞ</title>
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <style type="text/css">
+ul.form{
+    margin: 1em 1em 1em auto;
+    padding: 0;
+}
+ul.form>li{
+    list-style: none;
+    white-space: inherit;
+    padding-bottom: 0.5em;
+}
+ul.form>li>div:first-child{
+    display: inline-block;
+    _display: inline;
+    min-width: 6em;
+}
+ul.form>li>input{
+    width: 20em;
+}
+ ul.form>li>div:last-child{
+     display: inline-block;
+     _display: inline;
+ }
+.previewBox{
+    max-width: 25em;
+}
+.previewInnerBox{
+    border: 1px;
+    border-radius: 5px;
+    border-color: gray;
+    border-style: double;
+    margin: 0em 1em 1em 1em ;
+    padding: 0em 1em 0em 1em;
+    min-width: min-content;
+    max-width: 100%;
+}
+.previewBox>div.acceptBox{
+    display: flex;
+    justify-content: flex-end;
+}
+button{
+    margin-bottom: 0.5em;
+}
+@media (max-width: 768px){
+    .previewDiv{
+        max-width: 100%;
+    }
+    ul.form{
+        max-width: 100%;
+    }
+    ul.form>li{
+        max-width: 100%;
+    }
+    ul.form>li>input{
+        width: calc(100% - 10em);
+    }
+    ul.form>li>div:last-child{
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+    }
+    ul.form>li>div:last-child>button{
+        margin-top: 0.5em;
+        margin-left: 0.5em;
+    }
+    .previewBox{
+        max-width: 100%;
+    }
+    button{
+        font-size: 150%;
+    }
+}
+        </style>
+    </head>
+    <body onload="initialize()">
+        <h1>「マランだぞ」生成補助だぞ</h1>
+        <ul class="form">
+            <li>
+                <div class="form-head">本文だぞ：</div>
+                <input type="text" value="マランだぞ" oninput="updatePreview()" id="maranTextInput">
+            </li>
+            <li>
+                <div class="form-head">文末のだぞ：</div>
+                <input type="text" value="（HH:mm）" oninput="updatePreview()" id="maranFormatInput">
+                <div>
+                    <button onclick="setFormat1()">①</button>
+                    <button onclick="setFormat2()">②</button>
+                    <button onclick="setFormat3()">③</button>
+                </div>
+            </li>
+        </ul>
+        <div class="previewBox">
+            プレビューだぞ：
+            <div class="previewInnerBox">
+                <p id="preview"></p>
+            </div>
+            <div class="acceptBox"><button onclick="maranToClipboard()">クリップボードへ</button></div>
+            <div class="acceptBox"><button onclick="ofutonToClipboard()" title="『（』を『(:3[』、『）』を『]』に置換してるだけだぞ">おふとんをクリップボードへ</button></div>
+        </div>
+        <div>
+            <button onclick="changeTimerState()">自動更新切り替え</button>
+        </div>
+    </body>
+</html>

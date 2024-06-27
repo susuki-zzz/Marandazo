@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <script>
+function updatePreview(){
+    let pAtk = parseInt(document.getElementById("pAtkInput").value);
+    let atkp = parseFloat(document.getElementById("atkpInput").value)/100.0;
+    let wAtk = parseInt(document.getElementById("wAtkInput").value);
+    let etc = parseInt(document.getElementById("etcAtkInput").value);
+    //let etc = 0;
+    let a = 0.01 * pAtk
+    let b = (atkp + 1.0);
+    let c = (1.0 + etc + 0.005 * wAtk * atkp);
+    let d = b*c;
+    let ret = a/d;
+    console.log(pAtk);
+    console.log(atkp);
+    console.log(wAtk);
+    console.log(etc);
+    console.log(a);
+    console.log(b);
+    console.log(c);
+    console.log(d);
+    console.log(ret);
+    document.getElementById("preview").textContent = ret;
+}
+function initialize(){
+    updatePreview();
+}
+    </script>
+    <head>
+        <meta charset="UTF-8">
+        <title>計算するやつ（仮）だぞ</title>
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <style type="text/css">
+ul.form{
+    margin: 1em 1em 1em auto;
+    padding: 0;
+}
+ul.form>li{
+    list-style: none;
+    white-space: inherit;
+    padding-bottom: 0.5em;
+}
+ul.form>li>div:first-child{
+    display: inline-block;
+    _display: inline;
+    min-width: 6em;
+}
+ul.form>li>input{
+    width: 20em;
+}
+.previewBox{
+    max-width: 25em;
+}
+.previewInnerBox{
+    border: 1px;
+    border-radius: 5px;
+    border-color: gray;
+    border-style: double;
+    margin: 0em 1em 1em 1em ;
+    padding: 0em 1em 0em 1em;
+    min-width: min-content;
+    max-width: 100%;
+}
+button{
+    margin-bottom: 0.5em;
+}
+@media (max-width: 768px){
+    .previewDiv{
+        max-width: 100%;
+    }
+    ul.form{
+        max-width: 100%;
+    }
+    ul.form>li{
+        max-width: 100%;
+    }
+    ul.form>li>input{
+        width: calc(100% - 10em);
+    }
+    .previewBox{
+        max-width: 100%;
+    }
+    button{
+        font-size: 150%;
+    }
+}
+        </style>
+    </head>
+    <body onload="initialize()">
+        <h1>計算するやつ（仮）ver.0.01だぞ</h1>
+        記述日：2024/06/27
+        <ul>
+            <li>装備物理攻撃：ステータスで物理攻撃をタップしたら出てくるやつの下側の数字</li>
+            <li>物理攻撃％：ステータス画面参照</li>
+            <li>武器攻撃力：武器の一番上に書かれている攻撃力の値</li>
+        </ul>
+        <ul>
+            <li>※弓はSTRをDEXに置き換えても同様…なはずだぞ</li>
+            <li>テキトーにコピペしたりして書いてるからバグとかレイアウトはゆるして</li>
+        </ul>
+        <ul class="form">
+            <li>
+                <div class="form-head">装備物理攻撃：</div>
+                <input type="number" value="8000" oninput="updatePreview()" id="pAtkInput">
+            </li>
+            <li>
+                <div class="form-head">物理攻撃[%]：</div>
+                <input type="number" value="100" oninput="updatePreview()" id="atkpInput">
+            </li>
+            <li>
+                <div class="form-head">武器攻撃力：</div>
+                <input type="number" min="0" value="800" oninput="updatePreview()" id="wAtkInput">
+            </li>
+            <li>
+                <div class="form-head">STR1あたりの追加物理攻撃(α)：</div>
+                <input type="number" value="0" oninput="updatePreview()" id="etcAtkInput">
+            </li>
+        </ul>
+        <div class="previewBox">
+            物理攻撃1%の等価STR値：
+            <div class="previewInnerBox">
+                <p id="preview"></p>
+            </div>
+        </div>
+        <hr>
+        <div>
+            <p>仮説計算式：</p>
+            <p>装備物理攻撃/(物理攻撃％+1)×(物理攻撃％+1.01) - 装備物理攻撃/(物理攻撃％+1)=STR+STR×0.005%×武器攻撃力×物理攻撃％+STR×α</p>
+            <p>STR=(1%×装備物理攻撃)/((物理攻撃％+100%)(100%+0.5%×武器攻撃力×物理攻撃％+α))</p>
+        </div>
+    </body>
+</html>
