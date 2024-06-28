@@ -49,6 +49,31 @@ ul.form>li>div:first-child{
 ul.form>li>input{
     width: 20em;
 }
+.moddate{
+    padding: 0.5em 0em 0.5em 0em;
+    max-width: 25em;
+}
+.moddateBox{
+    border: 1px;
+    border-radius: 5px;
+    border-color: gray;
+    border-style: double;
+    max-width: 100%;
+}
+.innerModdateBox{
+    max-width: 100%;
+    margin: 0em;
+    max-height: 5em;
+    overflow-y: scroll;
+}
+.innerModdateBox>ul{
+    margin: 0em;
+    padding: 0.5em;
+}
+.innerModdateBox>ul>li{
+    list-style: none;
+    white-space: inherit;
+}
 .previewBox{
     max-width: 25em;
 }
@@ -78,6 +103,9 @@ button{
     ul.form>li>input{
         width: calc(100% - 10em);
     }
+    .moddate{
+        max-width: 100%;
+    }
     .previewBox{
         max-width: 100%;
     }
@@ -89,8 +117,7 @@ button{
     </head>
     <body onload="initialize()">
         <h1>計算するやつ（仮）ver.0.01だぞ</h1>
-        記述日：2024/06/27
-        MODDATE：2024/06/28 仮説計算式の記述間違いの修正
+       最終更新日：2024/06/28
         <ul>
             <li>装備物理攻撃：ステータスで物理攻撃をタップしたら出てくるやつの下側の数字</li>
             <li>物理攻撃％：ステータス画面参照</li>
@@ -122,6 +149,18 @@ button{
             物理攻撃1%上昇時の等価STR上昇値：
             <div class="previewInnerBox">
                 <p id="preview"></p>
+            </div>
+        </div>
+        <hr>
+        <div class="moddate">
+            変更履歴
+            <div class="moddateBox">
+                <div class="innerModdateBox">
+                    <ul>
+                        <li>2024/06/28 仮説計算式の記述間違いの修正</li>
+                        <li>2024/06/27 作成</li>
+                    </ul>
+                </div>
             </div>
         </div>
         <hr>

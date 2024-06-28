@@ -8,7 +8,35 @@
 button{
     margin-bottom: 0.5em;
 }
+.moddate{
+    padding: 0.5em 0em 0.5em 0em;
+    max-width: 25em;
+}
+.moddateBox{
+    border: 1px;
+    border-radius: 5px;
+    border-color: gray;
+    border-style: double;
+    max-width: 100%;
+}
+.innerModdateBox{
+    max-width: 100%;
+    margin: 0em;
+    max-height: 5em;
+    overflow-y: scroll;
+}
+.innerModdateBox>ul{
+    margin: 0em;
+    padding: 0.5em;
+}
+.innerModdateBox>ul>li{
+    list-style: none;
+    white-space: inherit;
+}
 @media (max-width: 768px){
+    .moddate{
+        max-width: 100%;
+    }
     button{
         font-size: 150%;
     }
@@ -17,9 +45,8 @@ button{
     </head>
     <body onload="initialize()">
         <h1>ラグオリ個人的調査まとめとメモ</h1>
+        最終更新日：2024/06/28
         <div>
-            記述日：2024/06/27
-            MODDATE：2024/06/28　×が抜けてた修正
             <p>とりあえず言えること：</p>
             <ul>
                 <li>良し悪しの比較は装備やカード付け外して比べたりカカシ殴って比べる方が早い。現段階では。</li>
@@ -52,6 +79,18 @@ button{
                 <li>ナイルローズ以外の他のステータス参照装備では何が上昇するか</li>
                 <li>凸ペットを付け外しすると基本攻撃力も謎に上昇する(筆者環境（プリ）では魔法攻撃だけがB6凸で約3、A1凸で約3、A6凸で約11上昇)</li>
             </ul>
+        </div>
+        <hr>
+        <div class="moddate">
+            変更履歴
+            <div class="moddateBox">
+                <div class="innerModdateBox">
+                    <ul>
+                        <li>2024/06/28 ×が抜けてた修正</li>
+                        <li>2024/06/27 作成</li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </body>
 </html>
